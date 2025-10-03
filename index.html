@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>1‑of‑1 AI 宠物画像 | Damon Studio</title>
+  <meta name="description" content="上传宠物照片，填写定制想法，下单并用 PayPal 付款。我将在 2–3 天内把 1‑of‑1 画像发到你的邮箱。" />
+  <link rel="icon" href="/images/favicon.png" />
+  <style>
+    :root{--bg:#0b1220;--card:#111827;--text:#e5e7eb;--muted:#9ca3af;--accent:#a78bfa;--accent2:#8b5cf6;--ring:rgba(167,139,250,.28)}
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,#0b1220 0%,#0f172a 60%,#0b1220 100%);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;-webkit-font-smoothing:antialiased}
+    a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+    img{max-width:100%;display:block}
+    .container{max-width:1080px;margin:0 auto;padding:0 16px}
+    .section{padding:56px 0}
+    .nav{position:sticky;top:0;backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid #1f2937;background:rgba(11,18,32,.6)}
+    .row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{font-weight:800}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:12px;border:1px solid var(--accent2);background:var(--accent);color:#0b1220;box-shadow:0 0 0 0 var(--ring);transition:transform .06s,box-shadow .2s}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.secondary{background:transparent;color:var(--text);border:1px solid #334155}
+    .badge{display:inline-block;padding:2px 8px;border-radius:999px;background:#0f172a;border:1px solid #1f2937;color:var(--muted);font-size:12px}
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:36px 0}
+    .hero h1{font-size:42px;line-height:1.15;margin:6px 0 8px}
+    .hero p{color:var(--muted)}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .field{display:flex;flex-direction:column;gap:6px}
+    .input,select,textarea{padding:12px 14px;border-radius:12px;border:1px solid #334155;background:#0b1220;color:var(--text)}
+    textarea{min-height:120px;resize:vertical}
+    footer{border-top:1px solid #1f2937;padding:20px 0;color:var(--muted)}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#0f172a;border:1px solid #1f2937}
+    .gallery{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+    .gallery img{aspect-ratio:1/1;object-fit:cover;border-radius:10px;border:1px solid #1f2937}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container row" style="padding:12px 0">
+      <div class="row" style="gap:10px"><span class="pill">🎨 定制</span><span class="brand">Damon · Pet Portraits</span></div>
+      <div class="row" style="gap:8px">
+        <a class="btn secondary" href="#order" id="i-nav-order">下单</a>
+        <a class="btn" href="#faq" id="i-nav-faq">FAQ</a>
+        <select id="lang" class="input" style="height:38px;padding:6px 10px">
+          <option value="zh-CN">中文</option>
+          <option value="en-GB">English (GB)</option>
+        </select>
+      </div>
+    </div>
+  </nav>
+
+  <header class="container hero section">
+    <div>
+      <span class="badge" id="i-badge">1‑of‑1 AI 宠物画像 · 邮箱交付</span>
+      <h1 id="i-title">上传照片 → 填写定制想法 → 付款下单<br>我将为你创作专属宠物画像</h1>
+      <p id="i-desc">灵感参考皇家/文艺复兴肖像风（例如 Royal Pets / DogArtists）。你下单后 2–3 天内交付高清数字文件（JPG/PNG）。如需打印装裱可加购。</p>
+      <div style="margin-top:14px" class="row">
+        <a class="btn" href="#order" id="i-cta-order">立即下单</a>
+        <a class="btn secondary" href="#order" id="i-cta-idea">填写定制想法</a>
+      </div>
+    </div>
+    <div>
+      <div class="gallery">
+        <img src="/images/dog-general.jpg" alt="皇家军装·白色马耳他犬">
+        <img src="/images/cat-royal.jpg" alt="金袍王冠·英短猫">
+        <img src="/images/labrador-marshal.jpg" alt="元帅军装·拉布拉多">
+        <img src="/images/dachshund-crown.jpg" alt="王冠权杖·腊肠犬">
+        <img src="/images/dog-general.jpg" alt="皇家军装·白色马耳他犬 2">
+        <img src="/images/cat-royal.jpg" alt="金袍王冠·英短猫 2">
+      </div>
+      <p class="muted" style="margin-top:8px">请将图片上传到仓库 <code>/images/</code> 目录，文件名与上面保持一致即可显示。</p>
+    </div>
+  </header>
+
+  <section class="container section" id="order">
+    <h2 id="i-order-title">下单信息</h2>
+    <p class="muted" id="i-order-desc">MVP 无后端实现：<strong>第 1 步</strong> 提交订单表；<strong>第 2 步</strong> 跳转支付链接完成付款。我会在 2–3 天把成品发到你的邮箱。</p>
+
+    <form id="order-form" action="https://formsubmit.co/1326086729@qq.com" method="POST">
+      <div class="grid2">
+        <div class="field">
+          <label id="i-form-email">邮箱（交付用）</label>
+          <input class="input" name="email" type="email" required placeholder="you@example.com" />
+        </div>
+        <div class="field">
+          <label id="i-form-pet">宠物名字</label>
+          <input class="input" name="pet_name" required placeholder="Coco" />
+        </div>
+        <div class="field" style="grid-column:1/-1">
+          <label id="i-form-idea">定制想法</label>
+          <textarea name="idea" class="input" placeholder="例如：皇家风+紫色斗篷；背景宫廷烛光；保留项圈；希望显得更威严…" required></textarea>
+          <span class="muted" style="font-size:12px">越具体越好：服饰/背景/气氛/道具/是否保留项圈等。</span>
+        </div>
+        <div class="field">
+          <label id="i-form-size">尺寸 / 交付</label>
+          <select class="input" name="size" required>
+            <option value="Digital">数字稿 (JPG/PNG)</option>
+            <option value="A4Print">A4 打印+邮寄（另计运费）</option>
+          </select>
+        </div>
+        <div class="field">
+          <label id="i-form-photos">宠物照片（至少 1 张）</label>
+          <input class="input" type="file" name="photos" accept="image/*" multiple required />
+          <span class="muted" style="font-size:12px">正脸清晰、光线均匀；可多选多张。</span>
+        </div>
+        <div class="field" style="grid-column:1/-1">
+          <label id="i-form-notes">其他备注（可选）</label>
+          <textarea name="notes" class="input" placeholder="如收件人名、节日卡片留言、加急需求等"></textarea>
+        </div>
+      </div>
+
+      <input type="hidden" name="_subject" value="新宠物画像订单" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="text" name="_honey" style="display:none" />
+      <!-- ✅ 将下面 _next 的仓库名替换为你的真实仓库名 -->
+      <input type="hidden" name="_next" value="https://damontheone.github.io/pet-portraits/#pay" />
+
+      <div class="row" style="gap:10px;margin-top:10px">
+        <button class="btn" type="submit" id="i-step1">第 1 步 · 提交订单</button>
+        <span class="badge">提交后跳到支付</span>
+      </div>
+    </form>
+
+    <div id="pay" style="margin-top:22px">
+      <h3 id="i-pay-title">第 2 步 · 完成付款</h3>
+      <p class="muted" id="i-pay-desc">订单提交后，点击下方支付链接完成付款（PayPal Payment Link）。</p>
+      <a class="btn" id="paylink" href="https://paypal.me/Damon0613/39GBP" target="_blank" rel="noopener">去付款 £39</a>
+      <p class="muted" style="margin-top:8px" id="i-pay-note">付款完成后你会收到确认邮件，我会在 2–3 天内交付数字文件。</p>
+    </div>
+  </section>
+
+  <section class="container section" id="benefits">
+    <h2 id="i-benefits-title">为什么选择我们</h2>
+    <div class="grid2" style="margin-top:12px">
+      <div class="field"><strong>72 小时交付</strong><p class="muted">下单后 2–3 天发回高清数字稿，可选 24h 加急（+£10）。</p></div>
+      <div class="field"><strong>一次免费微调</strong><p class="muted">色温/对比度/小配件等细节支持 1 次微调。</p></div>
+      <div class="field"><strong>打印友好</strong><p class="muted">提供 A4/A3 等尺寸与出血建议，便于自助装裱。</p></div>
+      <div class="field"><strong>多图合成</strong><p class="muted">可提供多张照片，支持挑选最佳角度或合成。</p></div>
+      <div class="field"><strong>PayPal 安全支付</strong><p class="muted">支持 PayPal.me（£39/£59），简单安全。</p></div>
+      <div class="field"><strong>邮件交付与存档</strong><p class="muted">作品发送至你的邮箱，长期可追溯。</p></div>
+    </div>
+  </section>
+
+  <section class="container section" id="process">
+    <h2 id="i-process-title">如何下单</h2>
+    <div class="grid2" style="margin-top:12px">
+      <div class="field"><strong>1) 提交表单</strong><p class="muted">上传宠物照片并填写“定制想法”。</p></div>
+      <div class="field"><strong>2) 付款</strong><p class="muted">点击页面“去付款”按钮（PayPal）。</p></div>
+      <div class="field"><strong>3) 初稿交付</strong><p class="muted">24–72 小时内邮件发回高清图。</p></div>
+      <div class="field"><strong>4) 微调</strong><p class="muted">可提出一次微调需求，确认后我发送最终文件。</p></div>
+    </div>
+  </section>
+
+  <section class="container section" id="faq">
+    <h2 id="i-faq-title">FAQ</h2>
+    <div class="grid2">
+      <div class="field"><strong>交付时间？</strong><p class="muted">通常 2–3 天交付数字稿；加急可 24 小时（+£10）。</p></div>
+      <div class="field"><strong>照片要求？</strong><p class="muted">正脸清晰、无遮挡、自然光最佳。多角度更好。</p></div>
+      <div class="field"><strong>修改次数？</strong><p class="muted">含 1 次微调（色温/对比度/小配件）。更大修改需加收。</p></div>
+      <div class="field"><strong>退款政策？</strong><p class="muted">未开工可全额退款；开始制作后不支持，但若质量问题可补救。</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container"><small>© <span id="y"></span> Damon Studio · Pet Portraits · Email: <a href="mailto:1326086729@qq.com">1326086729@qq.com</a></small></div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    const orderForm = document.getElementById('order-form');
+    const payLink = document.getElementById('paylink');
+
+    const BASE_PRICE = 39;
+    const ADDON_PRINT = 20; // A4 → £59
+
+    const PAYPAL_39 = 'https://paypal.me/Damon0613/39GBP';
+    const PAYPAL_59 = 'https://paypal.me/Damon0613/59GBP';
+
+    function computePrice(){
+      const size = (orderForm?.size?.value)||'Digital';
+      let price = BASE_PRICE;
+      if(size==='A4Print') price += ADDON_PRINT;
+      return price;
+    }
+    function refreshPay(){
+      const price = computePrice();
+      if(payLink){ payLink.textContent = `去付款 £${price}`; payLink.href = (price===39)?PAYPAL_39:PAYPAL_59; }
+    }
+    orderForm?.size?.addEventListener('change', refreshPay);
+    refreshPay();
+
+    orderForm?.addEventListener('submit', ()=>{ setTimeout(()=>{ location.hash = '#pay'; }, 100);});
+
+    // i18n
+    const dict = {
+      'zh-CN': {navOrder:'下单', navFAQ:'FAQ', badge:'1‑of‑1 AI 宠物画像 · 邮箱交付', title:'上传照片 → 填写定制想法 → 付款下单\n我将为你创作专属宠物画像', desc:'灵感参考皇家/文艺复兴肖像风（例如 Royal Pets / DogArtists）。你下单后 2–3 天内交付高清数字文件（JPG/PNG）。如需打印装裱可加购。', ctaOrder:'立即下单', ctaIdea:'填写定制想法', orderTitle:'下单信息', orderDesc:'MVP 无后端实现：<strong>第 1 步</strong> 提交订单表；<strong>第 2 步</strong> 跳转支付链接完成付款。我会在 2–3 天把成品发到你的邮箱。', fEmail:'邮箱（交付用）', fPet:'宠物名字', fIdea:'定制想法', fSize:'尺寸 / 交付', fPhotos:'宠物照片（至少 1 张）', fNotes:'其他备注（可选）', step1:'第 1 步 · 提交订单', payTitle:'第 2 步 · 完成付款', payDesc:'订单提交后，点击下方支付链接完成付款（PayPal Payment Link）。', payGo:'去付款', payNote:'付款完成后你会收到确认邮件，我会在 2–3 天内交付数字文件。', faqTitle:'FAQ', benefitsTitle:'为什么选择我们', processTitle:'如何下单'},
+      'en-GB': {navOrder:'Order', navFAQ:'FAQ', badge:'1‑of‑1 AI Pet Portraits · Email Delivery', title:'Upload photo → Add custom idea → Pay\nI will create a bespoke portrait for your pet', desc:'Inspired by royal/renaissance portrait styles (e.g. Royal Pets / DogArtists). Delivery in 2–3 days as high‑res JPG/PNG. Printing & framing available.', ctaOrder:'Order now', ctaIdea:'Add custom idea', orderTitle:'Order Details', orderDesc:'MVP (no backend): <strong>Step 1</strong> submit the form; <strong>Step 2</strong> open the payment link. I will deliver to your email within 2–3 days.', fEmail:'Email (delivery)', fPet:'Pet name', fIdea:'Custom idea', fSize:'Size / Delivery', fPhotos:'Pet photos (min 1)', fNotes:'Other notes (optional)', step1:'Step 1 · Submit order', payTitle:'Step 2 · Complete payment', payDesc:'After submitting, click the payment link below (PayPal Payment Link).', payGo:'Pay', payNote:'You will receive a confirmation email after payment. Final artwork delivered within 2–3 days.', faqTitle:'FAQ', benefitsTitle:'Why choose us', processTitle:'How it works'}
+    };
+    function s(id, html){ const el=document.getElementById(id); if(el && html!==undefined) el.innerHTML = html; }
+    function setLang(l){
+      const d=dict[l]; if(!d) return;
+      s('i-nav-order', d.navOrder); s('i-nav-faq', d.navFAQ);
+      s('i-badge', d.badge); s('i-title', d.title.replace(/\n/g,'<br>')); s('i-desc', d.desc);
+      s('i-cta-order', d.ctaOrder); s('i-cta-idea', d.ctaIdea);
+      s('i-order-title', d.orderTitle); s('i-order-desc', d.orderDesc);
+      s('i-form-email', d.fEmail); s('i-form-pet', d.fPet); s('i-form-idea', d.fIdea); s('i-form-size', d.fSize); s('i-form-photos', d.fPhotos); s('i-form-notes', d.fNotes);
+      s('i-step1', d.step1); s('i-pay-title', d.payTitle); s('i-pay-desc', d.payDesc);
+      const btn=document.getElementById('paylink'); if(btn){ const amount=(btn.textContent.match(/[£$]\d+/)||[''])[0]; btn.innerHTML = d.payGo + (amount?(' '+amount):''); }
+      s('i-pay-note', d.payNote); s('i-faq-title', d.faqTitle);
+      s('i-benefits-title', d.benefitsTitle); s('i-process-title', d.processTitle);
+      localStorage.setItem('lang', l);
+    }
+    const langSel=document.getElementById('lang');
+    const defaultLang=localStorage.getItem('lang')||(navigator.language==='en-GB'?'en-GB':'zh-CN');
+    if(langSel){ langSel.value=defaultLang; setLang(defaultLang); }
+    langSel?.addEventListener('change', ()=> setLang(langSel.value));
+  </script>
+</body>
+</html>
